@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:loja_flutter_curso/components/badge.dart';
 import 'package:loja_flutter_curso/components/product_grid.dart';
+import 'package:loja_flutter_curso/models/cart.dart';
 import 'package:loja_flutter_curso/models/product_list.dart';
+import 'package:loja_flutter_curso/utils/app_routes.dart';
 import 'package:provider/provider.dart';
 
 enum FilterOption {
@@ -36,7 +39,19 @@ class ProductsOverviewPages extends StatelessWidget {
                 provider.showAll();
               }
             },
-          )
+          ),
+          Consumer<Cart>(
+            child: IconButton(
+              onPressed: () {
+                Navigator.of(context).pushNamed(AppRoutes.cart);
+              },
+              icon: const Icon(Icons.shopping_cart),
+            ),
+            builder: (ctx, cart, child) => Badgee(
+              value: cart.itemsCount.toString(),
+              child: child!,
+            ),
+          ),
         ],
         backgroundColor: Theme.of(context).primaryColor,
         centerTitle: true,
